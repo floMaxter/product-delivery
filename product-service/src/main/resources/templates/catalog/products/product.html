@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <title>[[${product.title}]]</title>
+</head>
+<body>
+<h1 data-th-text="${product.title}"></h1>
+<ul>
+    <li><strong>ID</strong>: <span data-th-text="${product.id}"></span></li>
+    <li><strong>Название</strong>: <span data-th-text="${product.title}"></span></li>
+    <li><strong>Описание</strong>: <span data-th-text="${product.details}"></span></li>
+</ul>
+<form method="post" data-th-action="@{/catalog/products/{productId}/delete(productId=${product.id})}">
+    <button type="submit">Удалить</button>
+</form>
+<a data-th-href="@{/catalog/products/{productId}/edit(productId=${product.id})}">Изменить товар</a><br>
+<a data-th-href="@{/catalog/products/list}">К списку товаров</a><br>
+</body>
+</html>
