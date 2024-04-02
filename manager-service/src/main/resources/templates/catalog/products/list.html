@@ -5,7 +5,13 @@
     <title>Список товаров</title>
 </head>
 <body>
+<a data-th-href="@{/catalog/products/create}">+ Создать товар</a>
 <h1>Список товаров</h1>
+<form method="get" data-th-action="@{/catalog/products/list}">
+    <label>Фильтр:<input type="text" name="filter" data-th-value="${filter}">
+        <button type="submit">Поиск</button>
+    </label>
+</form>
 <table>
     <thead>
     <tr>
@@ -23,6 +29,5 @@
     </tr>
     </tbody>
 </table>
-<a data-th-href="@{/catalog/products/create}">Создать товар</a>
 </body>
 </html>
