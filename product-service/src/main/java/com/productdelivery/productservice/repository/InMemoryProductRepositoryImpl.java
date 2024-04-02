@@ -15,12 +15,6 @@ import java.util.stream.IntStream;
 public class InMemoryProductRepositoryImpl implements ProductRepository {
     private final List<Product> products = Collections.synchronizedList(new LinkedList<>());
 
-    public InMemoryProductRepositoryImpl() {
-        IntStream.range(1, 4)
-                .forEach(i -> this.products.add(new Product(i, "Товар №%d".formatted(i),
-                        "Описание товара№%d".formatted(i))));
-    }
-
     @Override
     public List<Product> findAll() {
         return Collections.unmodifiableList(this.products);
