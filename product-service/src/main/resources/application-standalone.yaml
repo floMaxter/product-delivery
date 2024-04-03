@@ -1,6 +1,13 @@
 spring:
+  security:
+    user:
+      name: catalog_service_user
+      password: '{noop}password'
+      roles:
+        - SERVICE
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/catalog-db
+    url: jdbc:postgresql://localhost:5434/catalog
     username: catalog
     password: catalog
   flyway:

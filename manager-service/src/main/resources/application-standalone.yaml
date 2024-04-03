@@ -2,4 +2,10 @@ productdelivery:
   services:
     catalog:
       uri: http://localhost:8081
-
+      username: catalog_service_user
+      password: password
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/manager
+    username: manager
+    password: manager
