@@ -27,13 +27,13 @@ public class ProductsRestController {
 
     @GetMapping
     public Iterable<Product> findProducts(@RequestParam(name = "filter", required = false) String filter) {
-     return this.productService.findAllProducts(filter);
+        return this.productService.findAllProducts(filter);
     }
 
     @PostMapping
     public ResponseEntity<?> createProduct(@Valid @RequestBody NewProductPayload payload,
-                                                 BindingResult bindingResult,
-                                                 UriComponentsBuilder uriComponentsBuilder)
+                                           BindingResult bindingResult,
+                                           UriComponentsBuilder uriComponentsBuilder)
             throws BindException {
         if (bindingResult.hasErrors()) {
             if (bindingResult instanceof BindException exception) {
