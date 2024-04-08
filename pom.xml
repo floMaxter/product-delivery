@@ -10,6 +10,7 @@
 		<module>product-service</module>
 		<module>manager-service</module>
         <module>customer-service</module>
+		<module>feedback-service</module>
     </modules>
 
 	<properties>

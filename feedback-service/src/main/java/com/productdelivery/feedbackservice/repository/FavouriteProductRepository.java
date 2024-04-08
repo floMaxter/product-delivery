@@ -1,6 +1,6 @@
-package com.productdelivery.customerservice.repository;
+package com.productdelivery.feedbackservice.repository;
 
-import com.productdelivery.customerservice.model.FavouriteProduct;
+import com.productdelivery.feedbackservice.model.FavouriteProduct;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

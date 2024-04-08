@@ -1,7 +1,7 @@
-package com.productdelivery.customerservice.service;
+package com.productdelivery.feedbackservice.service;
 
-import com.productdelivery.customerservice.model.ProductReview;
-import com.productdelivery.customerservice.repository.ProductReviewRepository;
+import com.productdelivery.feedbackservice.model.ProductReview;
+import com.productdelivery.feedbackservice.repository.ProductReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
