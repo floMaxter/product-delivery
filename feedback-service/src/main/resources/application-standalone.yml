@@ -1,2 +1,6 @@
 server:
   port: 8084
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27018/feedback
