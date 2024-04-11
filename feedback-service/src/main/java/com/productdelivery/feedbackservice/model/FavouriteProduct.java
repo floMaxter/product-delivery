@@ -12,11 +12,12 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document("favourite_product")
 public class FavouriteProduct {
 
     @Id
     private UUID id;
 
     private int productId;
+
+    private String userId;
 }

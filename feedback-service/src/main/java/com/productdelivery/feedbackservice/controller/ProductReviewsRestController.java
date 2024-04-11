@@ -6,6 +6,7 @@ import com.productdelivery.feedbackservice.service.ProductReviewsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,14 +31,15 @@ public class ProductReviewsRestController {
 
     @PostMapping
     public Mono<ResponseEntity<ProductReview>> createProductReview(
+            Mono<JwtAuthenticationToken> authenticationTokenMono,
             @Valid @RequestBody Mono<NewProductReviewPayload> payloadMono,
             UriComponentsBuilder uriComponentsBuilder) {
-        return payloadMono
-                .flatMap(payload -> this.productReviewsService.createProductReview(payload.productId(),
-                        payload.rating(), payload.review()))
+        return authenticationTokenMono.flatMap(token -> payloadMono
+                        .flatMap(payload -> this.productReviewsService.createProductReview(payload.productId(),
+                                payload.rating(), payload.review(), token.getToken().getSubject())))
                 .map(productReview -> ResponseEntity
                         .created(uriComponentsBuilder.replacePath("/feedback-api/product-reviews/{id}")
-                                .build(productReview.getProductId()))
+                                .build(productReview.getId()))
                         .body(productReview));
     }
 }

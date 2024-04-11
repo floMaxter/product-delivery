@@ -2,5 +2,23 @@ productdelivery:
   services:
     catalog:
       uri: http://localhost:8081
+    feedback:
+      uri: http://localhost:8084
 server:
   port: 8083
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/product-delivery
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: customer-app
+            client-secret: S9dz26MPiCPlVNYDxobBun7gqBcYaFtq
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+              - view_catalog

@@ -4,3 +4,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27018/feedback
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/product-delivery

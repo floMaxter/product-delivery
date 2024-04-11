@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class DefaultProductServiceImpl implements ProductService {
+public class DefaultProductService implements ProductService {
 
     private final ProductRepository productRepository;
 
