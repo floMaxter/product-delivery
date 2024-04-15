@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:16:///manager?TC_DAEMON=true
+    username: manager
+    password: manager

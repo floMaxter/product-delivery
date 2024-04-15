@@ -7,6 +7,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
-    @Query(name = "Product.findAllByTitleLikeIgnoringCase", nativeQuery = true)
     Iterable<Product> findAllByTitleLikeIgnoreCase(@Param("filter") String filter);
 }
