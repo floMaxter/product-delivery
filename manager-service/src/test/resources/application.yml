@@ -1,0 +1,4 @@
+productdelivery:
+  services:
+    catalog:
+      uri: http://localhost:54321
