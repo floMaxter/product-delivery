@@ -53,8 +53,8 @@ public class FavouriteProductsRestController {
     }
 
     @DeleteMapping("by-product-id/{productId:\\d+}")
-    public Mono<ResponseEntity<Void>> removeProductFromFavourite(Mono<JwtAuthenticationToken> authenticationTokenMono,
-                                                                 @PathVariable("productId") int productId) {
+    public Mono<ResponseEntity<Void>> removeProductFromFavourites(Mono<JwtAuthenticationToken> authenticationTokenMono,
+                                                                  @PathVariable("productId") int productId) {
         return authenticationTokenMono.flatMapMany(token -> this.favouriteProductsService
                         .removeProductFromFavourites(productId, token.getToken().getSubject()))
                 .then(Mono.just(ResponseEntity.noContent().build()));
