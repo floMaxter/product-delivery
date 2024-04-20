@@ -35,8 +35,8 @@ public class WebClientProductReviewsClient implements ProductReviewsClient {
                 .retrieve()
                 .bodyToMono(ProductReview.class)
                 .onErrorMap(WebClientResponseException.BadRequest.class,
-                        exception -> new ClientBadRequestException(exception,
-                                ((List<String>) (exception.getResponseBodyAs(ProblemDetail.class))
-                                        .getProperties().get("errors"))));
+                        exception -> new ClientBadRequestException("An error occurred when adding a product review",
+                                exception, ((List<String>) (exception.getResponseBodyAs(ProblemDetail.class))
+                                .getProperties().get("errors"))));
     }
 }

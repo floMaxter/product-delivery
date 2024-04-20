@@ -45,9 +45,9 @@ public class WebClientFavouriteProductClient implements FavouriteProductClient {
                 .retrieve()
                 .bodyToMono(FavouriteProduct.class)
                 .onErrorMap(WebClientResponseException.BadRequest.class,
-                        exception -> new ClientBadRequestException(exception,
-                                ((List<String>) (exception.getResponseBodyAs(ProblemDetail.class))
-                                        .getProperties().get("errors"))));
+                        exception -> new ClientBadRequestException("An error occurred when adding an item to favorites",
+                                exception, ((List<String>) (exception.getResponseBodyAs(ProblemDetail.class))
+                                .getProperties().get("errors"))));
     }
 
     @Override
