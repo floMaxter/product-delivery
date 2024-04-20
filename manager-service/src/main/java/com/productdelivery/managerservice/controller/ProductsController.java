@@ -4,7 +4,9 @@ import com.productdelivery.managerservice.client.BadRequestException;
 import com.productdelivery.managerservice.client.ProductsRestClient;
 import com.productdelivery.managerservice.controller.payload.NewProductPayload;
 import com.productdelivery.managerservice.model.Product;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +34,14 @@ public class ProductsController {
     }
 
     @PostMapping("create")
-    public String createProduct(NewProductPayload payload, Model model) {
+    public String createProduct(NewProductPayload payload,
+                                Model model,
+                                HttpServletResponse response) {
         try {
             Product product = this.productRestClient.createProduct(payload.title(), payload.details());
             return "redirect:/catalog/products/%d".formatted(product.id());
         } catch (BadRequestException exception) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             model.addAttribute("payload", payload);
             model.addAttribute("errors", exception.getErrors());
             return "catalog/products/new_product";

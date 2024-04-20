@@ -98,9 +98,10 @@ class ProductControllerTest {
         var product = new Product(1, "Новый товар", "Описание нового товара");
         var payload = new UpdateProductPayload("Новое название", "Новое описание");
         var model = new ConcurrentModel();
+        var response = new MockHttpServletResponse();
 
         // when
-        var result = this.controller.updateProduct(product, payload, model);
+        var result = this.controller.updateProduct(product, payload, model, response);
 
         // then
         assertEquals("redirect:/catalog/products/1", result);
@@ -114,12 +115,13 @@ class ProductControllerTest {
         var product = new Product(1, "Новый товар", "Описание нового товара");
         var payload = new UpdateProductPayload("   ", null);
         var model = new ConcurrentModel();
+        var response = new MockHttpServletResponse();
 
         doThrow(new BadRequestException(List.of("Ошибка 1", "Ошибка 2")))
                 .when(this.productsRestClient).updateProduct(1, "   ", null);
 
         // when
-        var result = this.controller.updateProduct(product, payload, model);
+        var result = this.controller.updateProduct(product, payload, model, response);
 
         // then
         assertEquals("catalog/products/edit", result);

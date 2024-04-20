@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.web.client.RestClient;
 
-import java.net.http.HttpClient;
-
 import static org.mockito.Mockito.mock;
 
 @Configuration
