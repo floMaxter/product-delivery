@@ -15,11 +15,25 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class ClientConfig {
 
-    @Bean
+    /*@Bean
     @Scope("prototype")
     public WebClient.Builder productDeliveryServicesWebClientBuilder(
             ReactiveClientRegistrationRepository clientRegistrationRepository,
             ServerOAuth2AuthorizedClientRepository authorizedClientRepository) {
+        ServerOAuth2AuthorizedClientExchangeFilterFunction filter =
+                new ServerOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrationRepository,
+                        authorizedClientRepository);
+        filter.setDefaultClientRegistrationId("keycloak");
+        return WebClient.builder()
+                .filter(filter);
+    }*/
+
+    @Bean
+    @Scope("prototype")
+    public WebClient.Builder productDeliveryServicesWebClientBuilder(
+            ReactiveClientRegistrationRepository clientRegistrationRepository,
+            ServerOAuth2AuthorizedClientRepository authorizedClientRepository
+    ) {
         ServerOAuth2AuthorizedClientExchangeFilterFunction filter =
                 new ServerOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrationRepository,
                         authorizedClientRepository);

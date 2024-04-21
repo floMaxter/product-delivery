@@ -4,21 +4,35 @@ import com.productdelivery.feedbackservice.model.ProductReview;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @SpringBootTest
 @AutoConfigureWebTestClient
+@AutoConfigureRestDocs
+@ExtendWith(RestDocumentationExtension.class)
 class ProductReviewsRestControllerIT {
 
     @Autowired
@@ -114,13 +128,32 @@ class ProductReviewsRestControllerIT {
                 .expectHeader().exists(HttpHeaders.LOCATION)
                 .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .expectBody()
-                    .json("""
+                .json("""
                         {
                             "productId": 1,
                             "rating": 5,
                             "review": "Отлично!",
                             "userId": "user-test"
-                        }""").jsonPath("$.id").exists();
+                        }""").jsonPath("$.id").exists()
+                .consumeWith(document("feedback/product_reviews/create_product_review",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestFields(
+                                fieldWithPath("productId").type("int").description("Product identifier"),
+                                fieldWithPath("rating").type("int").description("Product rating"),
+                                fieldWithPath("review").type("string").description("Product review")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").type("uuid").description("Review identifier"),
+                                fieldWithPath("productId").type("int").description("Product identifier"),
+                                fieldWithPath("rating").type("int").description("Product rating"),
+                                fieldWithPath("review").type("string").description("Product review"),
+                                fieldWithPath("userId").type("string").description("Customer identifier")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.LOCATION)
+                                        .description("Link to the created product review")
+                        )));
     }
 
     @Test

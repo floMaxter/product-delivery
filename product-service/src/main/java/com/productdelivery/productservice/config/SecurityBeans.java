@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 public class SecurityBeans {
 
@@ -16,6 +17,7 @@ public class SecurityBeans {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/catalog-api/products")
                         .hasAuthority("SCOPE_edit_catalog")
                         .requestMatchers(HttpMethod.PATCH, "/catalog-api/products/{productId:\\d}")

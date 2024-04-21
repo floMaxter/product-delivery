@@ -1,0 +1,12 @@
+= REST API catalog
+:toc right
+
+
+=== REST API Product
+
+==== Getting the Product
+.Response body
+include::{snippets}/catalog/products/find_all/response-body.adoc[]
+
+.Response property
+include::{snippets}/catalog/products/find_all/response-fields.adoc[]

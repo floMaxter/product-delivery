@@ -1,0 +1,17 @@
+= REST API feedback-service
+:toc: left
+
+=== Product reviews
+
+==== Product creation
+.Request
+include::{snippets}/feedback/product_reviews/create_product_review/http-request.adoc[]
+
+.Request property
+include::{snippets}/feedback/product_reviews/create_product_review/request-fields.adoc[]
+
+.Response
+include::{snippets}/feedback/product_reviews/create_product_review/http-response.adoc[]
+
+.Response property
+include::{snippets}/feedback/product_reviews/create_product_review/response-fields.adoc[]
