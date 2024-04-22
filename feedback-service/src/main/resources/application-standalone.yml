@@ -1,11 +1,40 @@
 server:
   port: 8084
 spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8085
+        instance:
+          name: feedback-service
+          service-host-type: ip
+        enabled: true
   data:
     mongodb:
       uri: mongodb://localhost:27018/feedback
   security:
     oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: feedback-service-metrics-client
+            client-secret: BWYUHoRNRdyGyU6nMAkX4Neax0x74Jj8
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/product-delivery
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8082/realms/product-delivery
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'

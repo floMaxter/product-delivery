@@ -1,12 +1,20 @@
+server:
+  port: 8083
 productdelivery:
   services:
     catalog:
       uri: http://localhost:8081
     feedback:
       uri: http://localhost:8084
-server:
-  port: 8083
 spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8085
+        instance:
+          name: customer-service
+          service-host-type: ip
+        enabled: true
   security:
     oauth2:
       client:
@@ -22,3 +30,23 @@ spring:
             scope:
               - openid
               - view_catalog
+          metrics:
+            provider: keycloak
+            client-id: customer-app-metrics-client
+            client-secret: bOyLx1Dc18zfM75HuWoynBcd0CWbrt81
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/product-delivery
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'

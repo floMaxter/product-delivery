@@ -1,9 +1,11 @@
 package com.productdelivery.managerservice.config;
 
+import jakarta.annotation.Priority;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -20,7 +22,27 @@ import java.util.stream.Stream;
 @Configuration
 public class SecurityBeans {
 
+    /**
+     * The SecurityFilterChain for processing metrics
+     * */
     @Bean
+    @Priority(0)
+    public SecurityFilterChain metricsSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher("/actuator/**")
+                .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
+                        .requestMatchers("/actuator/**").hasAuthority("SCOPE_metrics")
+                        .anyRequest().denyAll())
+                .oauth2ResourceServer(customizer -> customizer.jwt(Customizer.withDefaults()))
+                .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .build();
+    }
+
+    /**
+     * The SecurityFilterChain for processing all non-metrics request
+     * */
+    @Bean
+    @Priority(1)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest

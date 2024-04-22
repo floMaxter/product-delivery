@@ -1,4 +1,14 @@
+server:
+  port: 8081
 spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8085
+        instance:
+          name: product-service
+          service-host-type: ip
+        enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5434/catalog
     username: catalog
@@ -11,11 +21,30 @@ spring:
     show-sql: true
   security:
     oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/product-delivery
+        registration:
+          keycloak:
+            client-id: product-service-metrics-client
+            client-secret: kJAnOCAFxLu6zoScDgReZEYj5wTok1WN
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8082/realms/product-delivery
-server:
-  port: 8081
 logging:
   level:
     sql: info
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'

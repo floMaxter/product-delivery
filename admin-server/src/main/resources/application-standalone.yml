@@ -1,0 +1,26 @@
+server:
+  port: 8085
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/product-delivery
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/product-delivery
+        registration:
+          keycloak:
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics
+            client-id: admin-service
+            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
+          login:
+            provider: keycloak
+            scope:
+              - metrics
+              - openid
+            client-id: admin-service
+            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
