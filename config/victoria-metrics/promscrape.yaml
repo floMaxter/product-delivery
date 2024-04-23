@@ -1,0 +1,13 @@
+scrape_config:
+  - job_name: product_delivery_admin_service
+    static_config:
+      - targets: ["http://188.242.20.226:8085"]
+    metrics_path: /actuator/prometheus
+    oauth:
+      client_id: victoria-metrics
+      client_secret: x87UUWMHLoKvv52ACa2K9zzSs0zeEedV
+      token_url: http://188.242.20.226:8082/realms/product-delivery/protocol/openid-connect/token
+      scopes:
+        -metrics
+      endpoint_params:
+        grant_type: client_credentials
