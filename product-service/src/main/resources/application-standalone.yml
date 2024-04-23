@@ -1,6 +1,8 @@
 server:
   port: 8081
 spring:
+  application:
+    name: product-delivery-product-service
   boot:
     admin:
       client:
@@ -24,7 +26,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8082/realms/product-delivery
+            issuer-uri: http://192.168.56.1:8082/realms/product-delivery
         registration:
           keycloak:
             client-id: product-service-metrics-client
@@ -34,7 +36,7 @@ spring:
               - metrics_server
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/product-delivery
+          issuer-uri: http://192.168.56.1:8082/realms/product-delivery
 logging:
   level:
     sql: info

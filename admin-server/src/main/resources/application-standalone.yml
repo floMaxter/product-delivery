@@ -5,11 +5,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/product-delivery
+          issuer-uri: http://192.168.56.1:8082/realms/product-delivery
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8082/realms/product-delivery
+            issuer-uri: http://192.168.56.1:8082/realms/product-delivery
         registration:
           keycloak:
             authorization-grant-type: client_credentials

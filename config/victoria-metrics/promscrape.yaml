@@ -1,14 +1,70 @@
 scrape_configs:
   - job_name: product_delivery_admin_service
     static_configs:
-      - targets: ["http://172.28.132.237:8085"]
+      - targets: [ "http://192.168.56.1:8085" ]
         labels:
           application: product-delivery-admin-service
     metrics_path: /actuator/prometheus
     oauth2:
       client_id: victoria-metrics
       client_secret: x87UUWMHLoKvv52ACa2K9zzSs0zeEedV
-      token_url: http://172.28.132.237:8082/realms/selmag/protocol/openid-connect/token
+      token_url: http://192.168.56.1:8082/realms/product-delivery/protocol/openid-connect/token
+      scopes:
+        - metrics
+      endpoint_params:
+        grant_type: client_credentials
+  - job_name: product_delivery_product_service
+    static_configs:
+      - targets: [ "http://192.168.56.1:8081" ]
+        labels:
+          application: product-delivery-product-service
+    metrics_path: /actuator/prometheus
+    oauth2:
+      client_id: victoria-metrics
+      client_secret: x87UUWMHLoKvv52ACa2K9zzSs0zeEedV
+      token_url: http://192.168.56.1:8082/realms/product-delivery/protocol/openid-connect/token
+      scopes:
+        - metrics
+      endpoint_params:
+        grant_type: client_credentials
+  - job_name: product_delivery_manager_service
+    static_configs:
+      - targets: [ "http://192.168.56.1:8080" ]
+        labels:
+          application: product-delivery-manager-service
+    metrics_path: /actuator/prometheus
+    oauth2:
+      client_id: victoria-metrics
+      client_secret: x87UUWMHLoKvv52ACa2K9zzSs0zeEedV
+      token_url: http://192.168.56.1:8082/realms/product-delivery/protocol/openid-connect/token
+      scopes:
+        - metrics
+      endpoint_params:
+        grant_type: client_credentials
+  - job_name: product_delivery_feedback_service
+    static_configs:
+      - targets: [ "http://192.168.56.1:8084" ]
+        labels:
+          application: product-delivery-feedback-service
+    metrics_path: /actuator/prometheus
+    oauth2:
+      client_id: victoria-metrics
+      client_secret: x87UUWMHLoKvv52ACa2K9zzSs0zeEedV
+      token_url: http://192.168.56.1:8082/realms/product-delivery/protocol/openid-connect/token
+      scopes:
+        - metrics
+      endpoint_params:
+        grant_type: client_credentials
+  - job_name: product_delivery_customer_service
+    static_configs:
+      - targets: [ "http://192.168.56.1:8083" ]
+        labels:
+          application: product-delivery-customer-service
+    metrics_path: /actuator/prometheus
+    oauth2:
+      client_id: victoria-metrics
+      client_secret: x87UUWMHLoKvv52ACa2K9zzSs0zeEedV
+      token_url: http://192.168.56.1:8082/realms/product-delivery/protocol/openid-connect/token
       scopes:
         - metrics
       endpoint_params:

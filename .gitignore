@@ -17,13 +17,6 @@ spring-boot-starter-*/build/
 !spring-boot-starter-*/target/classes/
 !spring-boot-starter-*/target/test-classes/
 
-# PostgreSQL
-*.sql
-
-# MongoDB
-data/
-dump/
-
 # General
 .DS_Store
 *.class

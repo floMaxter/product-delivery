@@ -7,6 +7,8 @@ productdelivery:
     feedback:
       uri: http://localhost:8084
 spring:
+  application:
+    name: customer-service
   boot:
     admin:
       client:
@@ -20,7 +22,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8082/realms/product-delivery
+            issuer-uri: http://192.168.56.1:8082/realms/product-delivery
             user-name-attribute: preferred_username
         registration:
           keycloak:
@@ -39,7 +41,7 @@ spring:
               - metrics_server
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/product-delivery
+          issuer-uri: http://192.168.56.1:8082/realms/product-delivery
 management:
   health:
     livenessstate:
