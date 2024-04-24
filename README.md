@@ -48,6 +48,7 @@ Start in Docker:
     docker run --name product-delivery-metrics -p 8428:8428 -v ./config/victoria-metrics/promscrape.yaml:/promscrape.yaml victoriametrics/victoria-m
 
 * The command cannot be run on Windows, so it is recommended to use one of the Linux distributions or run via WSL.
+* In the files of promscrape.yaml and application-standalone.yaml you must specify the IP address of the host on which the app is running.
 
 ### 6. Grafana
 This component is used for visualization and analysis of metrics collected by Victoria Metrics
@@ -59,5 +60,14 @@ Start in Docker:
  * In order to output an individual collection of metrics for each user, the command is used ```"$(id -u)"```.
  * The command cannot be run on Windows, so it is recommended to use one of the Linux distributions or run via WSL.
 
-### 7. Before starting application, you need to register Spring profiles:
+### 7. Grafana Loki
+This component is used for centralized storage of logs.
+
+Start in Docker:
+
+    docker run --name product-delivery-loki -p 3100:3100 grafana/loki:2.9.4
+
+* To enable logging at startup, you must specify in the environment variables ```LOKI=http://${host_ip}:3100```, where ```${host_ip}``` - the address of the host where the application is launched.
+
+### 8. Before starting application, you need to register Spring profiles:
 * ```standalone``` - for starting all services.
