@@ -7,7 +7,7 @@ productdelivery:
       registration-id: keycloak
 spring:
   application:
-    name: manager-service
+    name: product-delivery-manager-service
   boot:
     admin:
       client:
@@ -56,3 +56,9 @@ management:
     web:
       exposure:
         include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://192.168.56.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
