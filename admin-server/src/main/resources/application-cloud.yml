@@ -1,0 +1,48 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: product-delivery-admin-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+        registration:
+          keycloak:
+            authorization-grant-type: client_credentials
+            client-id: admin-service
+            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
+            scope:
+              - metrics
+          login:
+            provider: keycloak
+            client-id: admin-service
+            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
+            scope:
+              - metrics
+              - openid
+          discovery:
+            provider: keycloak
+            client-id: admin-service
+            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - prometheus
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://192.168.56.1:8761/eureka/

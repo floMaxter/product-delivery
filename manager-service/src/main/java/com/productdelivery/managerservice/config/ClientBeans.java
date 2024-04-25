@@ -7,6 +7,8 @@ import de.codecentric.boot.admin.client.registration.RegistrationClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -28,9 +30,12 @@ public class ClientBeans {
             @Value("${productdelivery.services.catalog.uri:http://localhost:8081}") String catalogBaseUri,
             ClientRegistrationRepository clientRegistrationRepository,
             OAuth2AuthorizedClientRepository authorizedClientRepository,
-            @Value("${productdelivery.services.catalog.registration-id:keycloak}") String registrationId) {
+            @Value("${productdelivery.services.catalog.registration-id:keycloak}") String registrationId,
+            LoadBalancerClient loadBalancerClient
+    ) {
         return new RestClientProductsRestClient(RestClient.builder()
                 .baseUrl(catalogBaseUri)
+                .requestInterceptor(new LoadBalancerInterceptor(loadBalancerClient))
                 .requestInterceptor(
                         new OAuthClientHttpRequestInterceptor(
                                 new DefaultOAuth2AuthorizedClientManager(clientRegistrationRepository,

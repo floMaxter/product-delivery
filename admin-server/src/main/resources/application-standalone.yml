@@ -1,6 +1,8 @@
 server:
   port: 8085
 spring:
+  application:
+    name: product-delivery-admin-service
   security:
     oauth2:
       resourceserver:
@@ -12,18 +14,18 @@ spring:
             issuer-uri: http://192.168.56.1:8082/realms/product-delivery
         registration:
           keycloak:
+            client-id: admin-service
             authorization-grant-type: client_credentials
+            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
             scope:
               - metrics
-            client-id: admin-service
-            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
           login:
             provider: keycloak
+            client-id: admin-service
+            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
             scope:
               - metrics
               - openid
-            client-id: admin-service
-            client-secret: MMoPK3VxGWvYgTNGQrBcnpSkHfPSmUS1
 management:
   endpoints:
     web:

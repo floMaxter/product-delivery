@@ -19,7 +19,7 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: feedback-service-metrics-client
+            client-id: feedback-service
             client-secret: BWYUHoRNRdyGyU6nMAkX4Neax0x74Jj8
             authorization-grant-type: client_credentials
             scope:

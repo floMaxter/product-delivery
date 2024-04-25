@@ -1,14 +1,15 @@
 # Online-store
 Web application for an online product store based on a microservice architecture.
-#### Prerequisites: [Java 21](https://jdk.java.net/21/), [Maven](https://maven.apache.org/), [PostgreSQL](https://www.postgresql.org/), [MongoDB](https://www.mongodb.com/), [Docker](https://www.docker.com/), [Keycloak](https://www.keycloak.org/), [Mockito](https://site.mockito.org/), [MockMvc](https://docs.spring.io/spring-framework/reference/testing/spring-mvc-test-framework.html), [Grafana](https://grafana.com/), [VictoriaMetrics](https://victoriametrics.com/)
+#### Prerequisites: [Java 21](https://jdk.java.net/21/), [Maven](https://maven.apache.org/), [PostgreSQL](https://www.postgresql.org/), [MongoDB](https://www.mongodb.com/), [Docker](https://www.docker.com/), [Keycloak](https://www.keycloak.org/), [Mockito](https://site.mockito.org/), [MockMvc](https://docs.spring.io/spring-framework/reference/testing/spring-mvc-test-framework.html), [Grafana](https://grafana.com/), [VictoriaMetrics](https://victoriametrics.com/), [Spring Cloud Netflix Eureka](https://docs.spring.io/spring-cloud-netflix/docs/current/reference/html/)
 
 ## Description
 This project contains the following components:
 * ```product-service``` - is responsible for working with the product catalog and contains a RestController for processing requests from clients.
 * ```manager-service``` - is a client that processes manager requests and sends them to the product-service.
-* ```customer-service``` - is a client that processes customer request and sends them to the product-service and feedback-service.
-* ```feedback-service``` - is responsible for processing customer feedback.
+* ```customer-service``` - is a client that processes customer request and sends them to the product-service and feedback-service. This component is reactive.
+* ```feedback-service``` - is responsible for processing customer feedback. This component is reactive.
 * ```admin-server``` - is a module for administering services: viewing health and various metrics.
+* ```eureka-server``` - is a module for registering services.
 
 #### The application is covered with tests with using MockMvc and Mockito.
 
@@ -21,7 +22,8 @@ or download zip archive
     https://github.com/floMaxter/online-store-microservices/archive/refs/heads/main.zip
 
 ### 2. Before starting application, you need to register Spring profiles:
-* ```standalone``` - for starting all services.
+* ```standalone``` - for starting ```admin-server```, ```product-service```, ```manager-service```, ```feedback-service``` and ```customer-service``` without Eureka.
+* ```cloud``` - for starting ```admin-server```, ```eureka-server```, ```product-service```, ```manager-service```, ```feedback-service``` and ```customer-service``` services with Eureka.
 
 ### 3. Keycloak
 OAuth 2.0/OIDC is used to authorize services and authenticate users.

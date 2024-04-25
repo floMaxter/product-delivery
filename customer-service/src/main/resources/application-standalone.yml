@@ -26,7 +26,7 @@ spring:
             user-name-attribute: preferred_username
         registration:
           keycloak:
-            client-id: customer-app
+            client-id: customer-service
             client-secret: S9dz26MPiCPlVNYDxobBun7gqBcYaFtq
             authorization-grant-type: authorization_code
             scope:
@@ -34,8 +34,8 @@ spring:
               - view_catalog
           metrics:
             provider: keycloak
-            client-id: customer-app-metrics-client
-            client-secret: bOyLx1Dc18zfM75HuWoynBcd0CWbrt81
+            client-id: customer-service
+            client-secret: S9dz26MPiCPlVNYDxobBun7gqBcYaFtq
             authorization-grant-type: client_credentials
             scope:
               - metrics_server

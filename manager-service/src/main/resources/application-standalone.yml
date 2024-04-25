@@ -29,7 +29,7 @@ spring:
             user-name-attribute: preferred_username
         registration:
           keycloak:
-            client-id: manager-app
+            client-id: manager-service
             client-secret: 2OIPIWwv67AMc5o2MPf54a4uuGwBGqmZ
             scope:
               - openid
@@ -38,8 +38,8 @@ spring:
               - microprofile-jwt
           metrics:
             provider: keycloak
-            client-id: manager-app-metrics-client
-            client-secret: sebNErjZ9jbihzuWxFMk6SOEURiEVO6I
+            client-id: manager-service
+            client-secret: 2OIPIWwv67AMc5o2MPf54a4uuGwBGqmZ
             authorization-grant-type: client_credentials
             scope:
               - metrics_server

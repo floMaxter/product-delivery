@@ -9,6 +9,8 @@ import de.codecentric.boot.admin.client.registration.RegistrationClient;
 import io.micrometer.observation.ObservationRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -24,6 +26,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ClientConfig {
 
     @Bean
+    @LoadBalanced
     @Scope("prototype")
     public WebClient.Builder productDeliveryServicesWebClientBuilder(
             ReactiveClientRegistrationRepository clientRegistrationRepository,
@@ -52,7 +55,8 @@ public class ClientConfig {
     @Bean
     public WebClientFavouriteProductClient webClientFavouriteProductsClient(
             @Value("${productdelivery.services.feedback.uri:http://localhost:8084}") String feedbackBaseUrl,
-            WebClient.Builder productDeliveryServicesWebClientBuilder) {
+            WebClient.Builder productDeliveryServicesWebClientBuilder
+    ) {
         return new WebClientFavouriteProductClient(productDeliveryServicesWebClientBuilder
                 .baseUrl(feedbackBaseUrl)
                 .build());
@@ -61,7 +65,8 @@ public class ClientConfig {
     @Bean
     public WebClientProductReviewsClient webClientProductReviewsClient(
             @Value("${productdelivery.services.feedback.uri:http://localhost:8084}") String feedbackBaseUrl,
-            WebClient.Builder productDeliveryServicesWebClientBuilder) {
+            WebClient.Builder productDeliveryServicesWebClientBuilder
+    ) {
         return new WebClientProductReviewsClient(productDeliveryServicesWebClientBuilder
                 .baseUrl(feedbackBaseUrl)
                 .build());
