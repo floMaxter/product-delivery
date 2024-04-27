@@ -17,7 +17,7 @@ scrape_configs:
     static_configs:
       - targets: [ "http://192.168.56.1:8081" ]
         labels:
-          application: product-delivery-product-service
+          application: product-delivery-product-service-cloudconfig.yml
     metrics_path: /actuator/prometheus
     oauth2:
       client_id: victoria-metrics

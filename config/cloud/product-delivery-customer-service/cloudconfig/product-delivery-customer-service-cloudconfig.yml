@@ -1,0 +1,65 @@
+productdelivery:
+  services:
+    catalog:
+      uri: lb://product-delivery-product-service
+    feedback:
+      uri: lb://product-delivery-feedback-service
+spring:
+  boot:
+    admin:
+      client:
+        enabled: false
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: customer-service
+            client-secret: S9dz26MPiCPlVNYDxobBun7gqBcYaFtq
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+              - view_catalog
+          metrics:
+            provider: keycloak
+            client-id: customer-service
+            client-secret: S9dz26MPiCPlVNYDxobBun7gqBcYaFtq
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+          discovery:
+            provider: keycloak
+            client-id: customer-service
+            client-secret: S9dz26MPiCPlVNYDxobBun7gqBcYaFtq
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://192.168.56.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://192.168.56.1:8761/eureka/

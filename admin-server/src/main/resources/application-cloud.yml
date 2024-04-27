@@ -2,7 +2,7 @@ server:
   port: 8085
 spring:
   application:
-    name: product-delivery-admin-service
+    name: product-delivery-admin-server
   security:
     oauth2:
       resourceserver:

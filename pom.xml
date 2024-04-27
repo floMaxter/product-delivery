@@ -13,7 +13,8 @@
 		<module>feedback-service</module>
         <module>admin-server</module>
 		<module>eureka-server</module>
-	</modules>
+        <module>config-server</module>
+    </modules>
 
 	<properties>
 		<maven.compiler.sourse>21</maven.compiler.sourse>

@@ -1,0 +1,63 @@
+spring:
+  boot:
+    admin:
+      client:
+        enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5434/catalog
+    username: catalog
+    password: catalog
+  flyway:
+    schemas:
+      - public
+      - catalog
+  jpa:
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+        registration:
+          keycloak:
+            client-id: product-service
+            client-secret: kJAnOCAFxLu6zoScDgReZEYj5wTok1WN
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+          discovery:
+            provider: keycloak
+            client-id: product-service
+            client-secret: kJAnOCAFxLu6zoScDgReZEYj5wTok1WN
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+logging:
+  level:
+    sql: info
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://192.168.56.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://192.168.56.1:8761/eureka/

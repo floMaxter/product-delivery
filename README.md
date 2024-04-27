@@ -10,6 +10,7 @@ This project contains the following components:
 * ```feedback-service``` - is responsible for processing customer feedback. This component is reactive.
 * ```admin-server``` - is a module for administering services: viewing health and various metrics.
 * ```eureka-server``` - is a module for registering services.
+* ```config-server``` - is a module for configuring services. Both local configuration files in directory ```config/cloud``` and files located in the [github](https://github.com/floMaxter/product-delivery-config) are used.
 
 #### The application is covered with tests with using MockMvc and Mockito.
 
@@ -24,6 +25,9 @@ or download zip archive
 ### 2. Before starting application, you need to register Spring profiles:
 * ```standalone``` - for starting ```admin-server```, ```product-service```, ```manager-service```, ```feedback-service``` and ```customer-service``` without Eureka.
 * ```cloud``` - for starting ```admin-server```, ```eureka-server```, ```product-service```, ```manager-service```, ```feedback-service``` and ```customer-service``` services with Eureka.
+* ```cloudconfig``` - for starting ```admin-server```, ```eureka-server```, ```product-service```, ```manager-service```, ```feedback-service``` and ```customer-service``` with configuration from ```config-server```.
+* ```native``` - for starting ```config-server``` with configuration from local directory.
+* ```git``` - for starting ```config-server``` with configuration from git repository.
 
 ### 3. Keycloak
 OAuth 2.0/OIDC is used to authorize services and authenticate users.

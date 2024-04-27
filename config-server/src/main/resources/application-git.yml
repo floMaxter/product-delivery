@@ -1,0 +1,14 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: product-delivery-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/floMaxter/product-delivery-config.git
+          clone-on-start: true
+          default-label: main
+          search-paths:
+            - '{application}/{profile}'

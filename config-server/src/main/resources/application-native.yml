@@ -1,0 +1,10 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: product-delivery-config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:D:\Study\Training\Programming\Projects\Spring\Microservices\product-delivery\config\cloud\{application}\{profile}
