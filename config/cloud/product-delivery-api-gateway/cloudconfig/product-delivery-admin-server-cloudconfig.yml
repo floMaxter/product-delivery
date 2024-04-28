@@ -1,0 +1,67 @@
+spring:
+  boot:
+    admin:
+      client:
+        enabled: false
+  cloud:
+    gateway:
+      routes:
+        - id: product-service-route
+          uri: lb://product-delivery-product-service
+          predicates:
+            - Host=catalog.api.productdelivery.com.192.168.56.1.nip.io
+        - id: feedback-service-route
+          uri: lb://product-delivery-feedback-service
+          predicates:
+            - Host=feedback.api.productdelivery.com.192.168.56.1.nip.io
+    config:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+        registration:
+          discovery:
+            provider: keycloak
+            client-id: api-gateway
+            client-secret: P5xPuPOx0FOrM8fbT2YqS39Xk5k75ZYQ
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+          metrics:
+            provider: keycloak
+            client-id: api-gateway
+            client-secret: P5xPuPOx0FOrM8fbT2YqS39Xk5k75ZYQ
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.56.1:8082/realms/product-delivery
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://192.168.56.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 1
+    hostname: 192.168.56.1
+  client:
+    service-url:
+      defaultZone: http://192.168.56.1:8761/eureka/
+    registry-fetch-interval-seconds: 1

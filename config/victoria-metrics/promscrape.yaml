@@ -69,3 +69,17 @@ scrape_configs:
         - metrics
       endpoint_params:
         grant_type: client_credentials
+  - job_name: product_delivery_api_gateway
+    static_configs:
+      - targets: [ "http://192.168.56.1:8086" ]
+        labels:
+          application: product-delivery-api-gateway
+    metrics_path: /actuator/prometheus
+    oauth2:
+      client_id: victoria-metrics
+      client_secret: x87UUWMHLoKvv52ACa2K9zzSs0zeEedV
+      token_url: http://192.168.56.1:8082/realms/product-delivery/protocol/openid-connect/token
+      scopes:
+        - metrics
+      endpoint_params:
+        grant_type: client_credentials
