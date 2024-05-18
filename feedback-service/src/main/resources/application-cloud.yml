@@ -7,6 +7,9 @@ spring:
     admin:
       client:
         enabled: false
+  cloud:
+    config:
+      enabled: false
   data:
     mongodb:
       uri: mongodb://localhost:27018/feedback

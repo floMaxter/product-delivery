@@ -7,8 +7,11 @@ spring:
     admin:
       client:
         enabled: false
+  cloud:
+    config:
+      enabled: false
   datasource:
-    url: jdbc:postgresql://localhost:5434/catalog
+    url: jdbc:postgresql://192.168.56.1:5434/catalog
     username: catalog
     password: catalog
   flyway:

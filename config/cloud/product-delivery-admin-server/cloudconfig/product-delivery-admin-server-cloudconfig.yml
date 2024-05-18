@@ -38,7 +38,11 @@ management:
           - prometheus
 eureka:
   instance:
-    prefer-ip-address: true
+    hostname: 192.168.56.1
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 1
   client:
     service-url:
       defaultZone: http://192.168.56.1:8761/eureka/
+    registryFetchIntervalSeconds: 1
+    register-with-eureka: false

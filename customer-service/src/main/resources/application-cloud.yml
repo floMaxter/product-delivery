@@ -13,6 +13,9 @@ spring:
     admin:
       client:
         enabled: false
+  cloud:
+    config:
+      enabled: false
   security:
     oauth2:
       client:

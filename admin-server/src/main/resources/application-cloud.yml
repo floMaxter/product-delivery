@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: product-delivery-admin-server
+  cloud:
+    config:
+      enabled: false
   security:
     oauth2:
       resourceserver:

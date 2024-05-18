@@ -5,7 +5,7 @@ spring:
         enabled: false
   data:
     mongodb:
-      uri: mongodb://localhost:27018/feedback
+      uri: mongodb://192.168.56.1:27018/feedback
   security:
     oauth2:
       client:
@@ -47,7 +47,10 @@ management:
       probability: 1.0
 eureka:
   instance:
-    prefer-ip-address: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 1
+    hostname: 192.168.56.1
   client:
+    registryFetchIntervalSeconds: 1
     service-url:
       defaultZone: http://192.168.56.1:8761/eureka/

@@ -11,6 +11,9 @@ spring:
           name: product-service
           service-host-type: ip
         enabled: true
+  cloud:
+    config:
+      enabled: false
   datasource:
     url: jdbc:postgresql://localhost:5434/catalog
     username: catalog
@@ -56,3 +59,6 @@ management:
   tracing:
     sampling:
       probability: 1.0
+eureka:
+  client:
+    enabled: false

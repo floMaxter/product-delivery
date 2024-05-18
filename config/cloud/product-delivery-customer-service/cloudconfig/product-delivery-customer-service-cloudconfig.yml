@@ -59,7 +59,10 @@ management:
       probability: 1.0
 eureka:
   instance:
-    prefer-ip-address: true
+    hostname: 192.168.56.1
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 1
   client:
+    registryFetchIntervalSeconds: 1
     service-url:
       defaultZone: http://192.168.56.1:8761/eureka/

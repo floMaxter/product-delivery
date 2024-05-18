@@ -14,8 +14,14 @@ spring:
           uri: lb://product-delivery-feedback-service
           predicates:
             - Host=feedback.api.productdelivery.com.192.168.56.1.nip.io
-    config:
-      enabled: false
+        - id: manager-service-route
+          uri: lb://product-delivery-manager-service
+          predicates:
+            - Host=manager.productdelivery.com.192.168.56.1.nip.io
+        - id: customer-service-route
+          uri: lb://product-delivery-customer-service
+          predicates:
+            - Host=customer.productdelivery.com.192.168.56.1.nip.io
   security:
     oauth2:
       client:
@@ -62,6 +68,6 @@ eureka:
     lease-expiration-duration-in-seconds: 1
     hostname: 192.168.56.1
   client:
+    registry-fetch-interval-seconds: 1
     service-url:
       defaultZone: http://192.168.56.1:8761/eureka/
-    registry-fetch-interval-seconds: 1

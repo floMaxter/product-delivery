@@ -12,12 +12,17 @@ This project contains the following components:
 * ```eureka-server``` - is a module for registering services.
 * ```config-server``` - is a module for configuring services. Both local configuration files in directory ```config/cloud``` and files located in the [github](https://github.com/floMaxter/product-delivery-config) are used.
 
-#### The application is covered with tests with using MockMvc and Mockito.
+#### The app is covered with tests with using MockMvc and Mockito.
+#### The app can be deployed using docker.
+
 
 ## Getting Started
 ### 1. Clone the repository
+```shell
     git clone https://github.com/floMaxter/online-store-microservices.git
     cd online-store-microservices
+````
+
 or download zip archive
 
     https://github.com/floMaxter/online-store-microservices/archive/refs/heads/main.zip
@@ -34,28 +39,36 @@ OAuth 2.0/OIDC is used to authorize services and authenticate users.
 
 Start in Docker:
 
-    docker run --name product-delivery-keycloak -p 8082:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -v ./config/keycloak/import:/opt/keycloak/data/import quay.io/keycloak/keycloak:23.0.7 start-dev --import-realm
+```shell
+docker run --name product-delivery-keycloak -p 8082:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -v ./config/keycloak/import:/opt/keycloak/data/import quay.io/keycloak/keycloak:23.0.7 start-dev --import-realm
+```
 
 ### 4. PostgreSQL
 A PostgreSQL is used to store information about products.
 
 Start in Docker:
 
-    docker run --name catalog-db -p 5434:5432 -e POSTGRES_USER=catalogue -e POSTGRES_PASSWORD=catalogue -e POSTGRES_DB=catalog postgres:16
+```shell
+docker run --name catalog-db -p 5434:5432 -e POSTGRES_USER=catalog -e POSTGRES_PASSWORD=catalog -e POSTGRES_DB=catalog postgres:16
+```
 
 ### 5. MongoDB
 A MongoDB is used to store feedback from customers.
 
 Start in Docker:
 
-    docker run --name feedback-db -p 27017:27017 mongo:7
+```shell
+docker run --name feedback-db -p 27018:27017 mongo:7
+```
 
 ### 6. Victoria Metrics
 This component is used to collect and store metrics from services.
 
 Start in Docker:
 
-    docker run --name product-delivery-metrics -p 8428:8428 -v ./config/victoria-metrics/promscrape.yaml:/promscrape.yaml victoriametrics/victoria-m
+```shell
+docker run --name product-delivery-metrics -p 8428:8428 -v ./config/victoria-metrics/promscrape.yaml:/promscrape.yaml victoriametrics/victoria-m
+```
 
 * The command cannot be run on Windows, so it is recommended to use one of the Linux distributions or run via WSL.
 * In the files of promscrape.yaml and application-standalone.yaml you must specify the IP address of the host on which the app is running.
@@ -65,7 +78,9 @@ This component is used for visualization and analysis of metrics collected by Vi
 
 Start in Docker:
 
-    docker run --name product-delivery-grafana -p 3000:3000 -v ./data/grafana:/var/lib/grafana -u "$(id -u)" grafana/grafana:10.2.4
+```shell
+docker run --name product-delivery-grafana -p 3000:3000 -v ./data/grafana:/var/lib/grafana -u "$(id -u)" grafana/grafana:10.2.4
+```
 
  * In order to output an individual collection of metrics for each user, the command is used ```"$(id -u)"```.
  * The command cannot be run on Windows, so it is recommended to use one of the Linux distributions or run via WSL.
@@ -75,8 +90,9 @@ This component is used for centralized storage of logs.
 
 Start in Docker:
 
-    docker run --name product-delivery-loki -p 3100:3100 grafana/loki:2.9.4
-
+```shell
+docker run --name product-delivery-loki -p 3100:3100 grafana/loki:2.9.4
+```
 * To enable logging at startup, you must specify in the environment variables ```LOKI=http://${host_ip}:3100```, where ```${host_ip}``` - the address of the host where the application is launched.
 
 ### 9. Grafana Tempo
@@ -84,6 +100,35 @@ This component is used for centralized collection of traces.
 
 Start in Docker:
 
-    docker run --name product-delivery-tracing -p 3200:3200 -p 9095:9095 -p 4317:4317 -p 4318:4318 -p 9411:9411 -p 14268:14268 -v ./config/tempo/tempo.yaml:/etc/tempo.yaml grafana/tempo:2.3.1 -config.file=/etc/tempo.yaml
+```shell
+docker run --name product-delivery-tracing -p 3200:3200 -p 9095:9095 -p 4317:4317 -p 4318:4318 -p 9411:9411 -p 14268:14268 -v ./config/tempo/tempo.yaml:/etc/tempo.yaml grafana/tempo:2.3.1 -config.file=/etc/tempo.yaml
+```
 
 * To access services via an ip address, rather than through localhost, you need to reconfigure clients in keycloak.
+
+## Deploy
+You can deploy the application in docker using Dockerfile or Docker-compose.
+* To use Dockerfile, you should to first build an image of the module:
+```shell
+docker build --build-arg JAR_FILE=product-service/target/product-service-0.0.1-SNAPSHOT-exec.jar -t product-delivery/product-service:0.0.1 .
+```
+then create a container using the command:
+```shell
+docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=cloudconfig --name product-delivery-manager-service product-delivery/manager-service:0.0.1
+```
+
+* To use Docker-compose, you should to run the following command in the root directory of the project to start all containers:
+```shell
+docker compose up
+```
+
+## The order of launch
+All infrastructure components are started first: ```keycloak```, ```postgres``` and etc. Then the following order:
+1. ```config-server```
+2. ```eureka-server```
+3. ```admin-server```
+4. ```api-gateway```
+5. ```product-service```
+6. ```feedback-service```
+7. ```manager-service```
+8. ```customer-service```
