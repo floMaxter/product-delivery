@@ -1,7 +1,7 @@
 scrape_configs:
   - job_name: product_delivery_admin_service
     static_configs:
-      - targets: [ "http://192.168.56.1:8085" ]
+      - targets: [ "http://admin-server:8085" ]
         labels:
           application: product-delivery-admin-service
     metrics_path: /actuator/prometheus
@@ -15,7 +15,7 @@ scrape_configs:
         grant_type: client_credentials
   - job_name: product_delivery_product_service
     static_configs:
-      - targets: [ "http://192.168.56.1:8081" ]
+      - targets: [ "http://product-service:8081" ]
         labels:
           application: product-delivery-product-service-cloudconfig.yml
     metrics_path: /actuator/prometheus
@@ -29,7 +29,7 @@ scrape_configs:
         grant_type: client_credentials
   - job_name: product_delivery_manager_service
     static_configs:
-      - targets: [ "http://192.168.56.1:8080" ]
+      - targets: [ "http://manager-service:8080" ]
         labels:
           application: product-delivery-manager-service
     metrics_path: /actuator/prometheus
@@ -43,7 +43,7 @@ scrape_configs:
         grant_type: client_credentials
   - job_name: product_delivery_feedback_service
     static_configs:
-      - targets: [ "http://192.168.56.1:8084" ]
+      - targets: [ "http://feedback-service:8084" ]
         labels:
           application: product-delivery-feedback-service
     metrics_path: /actuator/prometheus
@@ -57,7 +57,7 @@ scrape_configs:
         grant_type: client_credentials
   - job_name: product_delivery_customer_service
     static_configs:
-      - targets: [ "http://192.168.56.1:8083" ]
+      - targets: [ "http://customer-service:8083" ]
         labels:
           application: product-delivery-customer-service
     metrics_path: /actuator/prometheus
@@ -71,7 +71,7 @@ scrape_configs:
         grant_type: client_credentials
   - job_name: product_delivery_api_gateway
     static_configs:
-      - targets: [ "http://192.168.56.1:8086" ]
+      - targets: [ "http://api-gateway:8086" ]
         labels:
           application: product-delivery-api-gateway
     metrics_path: /actuator/prometheus

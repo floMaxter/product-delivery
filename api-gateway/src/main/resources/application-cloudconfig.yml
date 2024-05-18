@@ -1,8 +1,9 @@
 server:
-  port: 8084
+  port: 8086
+  forward-headers-strategy: framework
 spring:
   application:
-    name: product-delivery-feedback-service
+    name: product-delivery-api-gateway
   config:
     import: 'optional:configserver:'
   cloud:

@@ -16,10 +16,9 @@ spring:
           name: manager-service
           service-host-type: ip
         enabled: true
-  datasource:
-    url: jdbc:postgresql://localhost:5433/manager
-    username: manager
-    password: manager
+  cloud:
+    config:
+      enabled: false
   security:
     oauth2:
       client:
@@ -62,3 +61,6 @@ management:
   tracing:
     sampling:
       probability: 1.0
+eureka:
+  client:
+    enabled: false

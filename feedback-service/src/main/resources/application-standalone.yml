@@ -11,6 +11,9 @@ spring:
           name: feedback-service
           service-host-type: ip
         enabled: true
+  cloud:
+    config:
+      enabled: false
   data:
     mongodb:
       uri: mongodb://localhost:27018/feedback
@@ -46,3 +49,6 @@ management:
   tracing:
     sampling:
       probability: 1.0
+eureka:
+  client:
+    enabled: false
